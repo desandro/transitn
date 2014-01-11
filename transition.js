@@ -110,7 +110,6 @@ Transition.prototype.css = function( style ) {
   for ( var prop in style ) {
     // use vendor property if available
     var vendorProp = styleProperty.getVendor( prop );
-    console.log( vendorProp, style[ prop ] );
     elemStyle[ vendorProp ] = style[ prop ];
   }
 };
@@ -126,7 +125,9 @@ Transition.prototype._removeStyles = function( style ) {
 
 var cleanTransitionStyle = {
   transitionProperty: '',
-  transitionDuration: ''
+  transitionDuration: '',
+  transitionTimingFunction: '',
+  transitionDelay: ''
 };
 
 Transition.prototype.removeTransitionStyles = function() {
@@ -169,7 +170,7 @@ Transition.prototype._transition = function() {
 
   for ( var prop in this.to ) {
     // keep track of transitioning properties
-    this.transitioningProperties = prop;
+    this.transitioningProperties[ prop ] = true;
     // keep track of properties to clean up when transition is done
     if ( this.isCleaning ) {
       this.clean[ prop ] = true;

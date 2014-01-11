@@ -11,7 +11,7 @@
     background: #09F;
   }
   </style>
-  
+
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 <script src="transition.js"></script>
 
 <script>
-  
+
 window.onload = function() {
   var box = document.querySelector('#box');
   box.onclick = function() {
@@ -32,15 +32,16 @@ window.onload = function() {
     var transition = new Transition({
       element: box,
       duration: '0.8s',
+      isCleaning: true,
       to: {
         transform: 'translate(' + x + 'px,' + y + 'px)'
       }
     })
-    
+
     transition.on( 'transitionend', function( trans, event, propertyName ) {
       console.log( propertyName );
     });
-    
+
     transition.transition();
   }
 };
