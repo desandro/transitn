@@ -1,0 +1,24 @@
+{
+  "name": "transition",
+  "main": "transition.js",
+  "version": "0.0.0",
+  "authors": [
+    "David DeSandro"
+  ],
+  "description": "utility JS class for CSS transitions",
+  "keywords": [
+    "transitions"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "eventEmitter": "#>3 <5",
+    "get-style-property": "desandro/get-style-property#>1 <2"
+  }
+}
