@@ -207,6 +207,7 @@ Transition.prototype.enable = function() {
   var transitionProps = [];
   for ( var prop in this.to ) {
     // dash-ify camelCased properties like WebkitTransition
+    prop = styleProperty.getVendor( prop );
     transitionProps.push( dashCase( prop ) );
   }
   // enable transition styles
