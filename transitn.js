@@ -1,5 +1,5 @@
 /*!
- * Transition
+ * Transitn
  * utility class for CSS transitions
  */
 
@@ -81,16 +81,16 @@ var styleProperty = ( function() {
 })();
 
 
-// -------------------------- Transition -------------------------- //
+// -------------------------- Transitn -------------------------- //
 
 
 
-function Transition( properties ) {
+function Transitn( properties ) {
   this.set( properties );
 }
 
-Transition.prototype = new EventEmitter();
-Transition.prototype.constructor = Transition;
+Transitn.prototype = new EventEmitter();
+Transitn.prototype.constructor = Transitn;
 
 // from
 // to
@@ -98,13 +98,13 @@ Transition.prototype.constructor = Transition;
 // duration
 // timingFunction
 // isCleaning
-Transition.prototype.set = function( props ) {
+Transitn.prototype.set = function( props ) {
   extend( this, props );
 };
 
 // ----- css ----- //
 
-Transition.prototype.css = function( style ) {
+Transitn.prototype.css = function( style ) {
   var elemStyle = this.element.style;
 
   for ( var prop in style ) {
@@ -114,7 +114,7 @@ Transition.prototype.css = function( style ) {
   }
 };
 
-Transition.prototype._removeStyles = function( style ) {
+Transitn.prototype._removeStyles = function( style ) {
   // clean up transition styles
   var cleanStyle = {};
   for ( var prop in style ) {
@@ -130,7 +130,7 @@ var cleanTransitionStyle = {
   transitionDelay: ''
 };
 
-Transition.prototype.removeTransitionStyles = function() {
+Transitn.prototype.removeTransitionStyles = function() {
   // remove transition
   this.css( cleanTransitionStyle );
 };
@@ -138,7 +138,7 @@ Transition.prototype.removeTransitionStyles = function() {
 // ----- transition ----- //
 
 // non transition, just trigger callback
-Transition.prototype._nonTransition = function() {
+Transitn.prototype._nonTransition = function() {
   this.css( this.to );
   if ( this.isCleaning ) {
     this._removeStyles( this.to );
@@ -156,7 +156,7 @@ Transition.prototype._nonTransition = function() {
  *   @param {Boolean} isCleaning - removes transition styles after transition
  *   @param {Function} onTransitionEnd - callback
  */
-Transition.prototype._transition = function() {
+Transitn.prototype._transition = function() {
   // redirect to nonTransition if no transition duration
   if ( !parseFloat( this.duration ) ) {
     this._nonTransition();
@@ -191,9 +191,9 @@ Transition.prototype._transition = function() {
   this.isTransitioning = true;
 };
 
-Transition.prototype.transition = Transition.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
+Transitn.prototype.transition = Transitn.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
 
-Transition.prototype.enable = function() {
+Transitn.prototype.enable = function() {
   // only enable if not already transitioning
   // bug in IE10 were re-setting transition style will prevent
   // transitionend event from triggering
@@ -231,22 +231,22 @@ Transition.prototype.enable = function() {
 // ----- events ----- //
 
 // trigger specified handler for event type
-Transition.prototype.handleEvent = function( event ) {
+Transitn.prototype.handleEvent = function( event ) {
   var method = 'on' + event.type;
   if ( this[ method ] ) {
     this[ method ]( event );
   }
 };
 
-Transition.prototype.onwebkitTransitionEnd = function( event ) {
+Transitn.prototype.onwebkitTransitionEnd = function( event ) {
   this.ontransitionend( event );
 };
 
-Transition.prototype.onotransitionend = function( event ) {
+Transitn.prototype.onotransitionend = function( event ) {
   this.ontransitionend( event );
 };
 
-Transition.prototype.ontransitionend = function( event ) {
+Transitn.prototype.ontransitionend = function( event ) {
   // disregard bubbled events from children
   if ( event.target !== this.element ) {
     return;
@@ -272,14 +272,14 @@ Transition.prototype.ontransitionend = function( event ) {
   this.emitEvent( 'transitionend', [ this, event, propertyName ] );
 };
 
-Transition.prototype.disable = function() {
+Transitn.prototype.disable = function() {
   this.removeTransitionStyles();
   this.element.removeEventListener( transitionEndEvent, this, false );
   this.isTransitioning = false;
 };
 
 
-return Transition;
+return Transitn;
 
 }
 
@@ -292,7 +292,7 @@ if ( typeof define === 'function' && define.amd ) {
     transitionDefinition );
 } else {
   // browser global
-  window.Transition = transitionDefinition(
+  window.Transitn = transitionDefinition(
     window.EventEmitter,
     window.getStyleProperty
   );
