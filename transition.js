@@ -135,9 +135,7 @@ Transition.prototype.removeTransitionStyles = function() {
   this.css( cleanTransitionStyle );
 };
 
-// -----  ----- //
-
-
+// ----- transition ----- //
 
 // non transition, just trigger callback
 Transition.prototype._nonTransition = function() {
@@ -145,8 +143,8 @@ Transition.prototype._nonTransition = function() {
   if ( this.isCleaning ) {
     this._removeStyles( this.to );
   }
-  for ( var prop in this.onEnd ) {
-    this.onEnd[ prop ].call( this );
+  for ( var prop in this.to ) {
+    this.emitEvent( 'transitionend', [ this, event, prop ] );
   }
 };
 

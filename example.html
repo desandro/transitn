@@ -26,7 +26,7 @@
 
 window.onload = function() {
   var box = document.querySelector('#box');
-  box.onclick = function() {
+  document.body.onclick = function() {
     var x = Math.floor( Math.random() * 400 );
     var y = Math.floor( Math.random() * 100 );
     var transition = new Transition({
