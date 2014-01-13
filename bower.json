@@ -1,12 +1,13 @@
 {
-  "name": "transition",
-  "main": "transition.js",
+  "name": "transitn",
+  "main": "transitn.js",
   "version": "0.0.0",
   "authors": [
     "David DeSandro"
   ],
   "description": "utility JS class for CSS transitions",
   "keywords": [
+    "transition",
     "transitions"
   ],
   "license": "MIT",
