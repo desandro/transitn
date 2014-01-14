@@ -144,7 +144,7 @@ Transitn.prototype._nonTransition = function() {
     this._removeStyles( this.to );
   }
   for ( var prop in this.to ) {
-    this.emitEvent( 'transitionend', [ this, event, prop ] );
+    this.emitEvent( 'transitionend', [ this, prop, event ] );
   }
 };
 
@@ -269,7 +269,7 @@ Transitn.prototype.ontransitionend = function( event ) {
     delete this.clean[ propertyName ];
   }
 
-  this.emitEvent( 'transitionend', [ this, event, propertyName ] );
+  this.emitEvent( 'transitionend', [ this, propertyName, event ] );
 };
 
 Transitn.prototype.disable = function() {
