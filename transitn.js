@@ -1,5 +1,5 @@
 /*!
- * Transitn
+ * Transitn 0.1.0
  * utility class for CSS transitions
  */
 

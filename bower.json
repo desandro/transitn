@@ -1,7 +1,7 @@
 {
   "name": "transitn",
   "main": "transitn.js",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "authors": [
     "David DeSandro"
   ],
