@@ -7,7 +7,7 @@ Used in [Outlayer](github.com/metafizzy/outlayer) for [Masonry](http://masonry.d
 ``` js
 // create transition
 var transition = new Transitn({
-  element: document.querySelector('#elem),
+  element: document.querySelector('#elem'),
   duration: '0.5s',
   to: {
     opacity: 1,
