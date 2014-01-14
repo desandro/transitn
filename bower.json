@@ -19,7 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "eventEmitter": "#>3 <5",
-    "get-style-property": "desandro/get-style-property#>1 <2"
+    "eventEmitter": "#>=3 <5",
+    "get-style-property": "desandro/get-style-property#>=1 <2"
   }
 }
