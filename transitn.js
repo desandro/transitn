@@ -191,7 +191,7 @@ Transitn.prototype._transition = function() {
   this.isTransitioning = true;
 };
 
-Transitn.prototype.transition = Transitn.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
+Transitn.prototype.start = Transitn.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
 
 Transitn.prototype.enable = function() {
   // only enable if not already transitioning
