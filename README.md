@@ -82,3 +82,7 @@ transition.on( 'transitionend', function( _trnstn, property, event ) {
 + `_trnstn` _Transitn_ - Transitn instance
 + `property` _String_ - Standardized property name of ended transition
 + `event` _Event_ - original transitionend event. Not available if transition was immediately executed (<IE10, and when duration == 0).
+
+## MIT license
+
+Transitn is released under the [MIT license](http://desandro.mit-license.org).

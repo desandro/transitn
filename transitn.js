@@ -1,6 +1,7 @@
 /*!
  * Transitn 0.1.0
  * utility class for CSS transitions
+ * MIT license
  */
 
 /*jshint browser: true, strict: true, undef: true, unused: true */
