@@ -1,13 +1,39 @@
 /*!
- * Transitn 0.1.0
+ * Transitn 0.1.1
  * utility class for CSS transitions
  * MIT license
  */
 
 /*jshint browser: true, strict: true, undef: true, unused: true */
-/*global define: false*/
 
-( function( window ) { 'use strict';
+( function( window, factory ) { 'use strict';
+
+  // ----- module definition ----- //
+  /*global define: false, module: false, require: false*/
+
+  if ( typeof define === 'function' && define.amd ) {
+    // AMD
+    define( [
+        'eventEmitter/EventEmitter',
+        'get-style-property/get-style-property'
+      ],
+      factory );
+  } else if ( typeof exports === 'object' ) {
+    module.exports = factory(
+      require('eventEmitter'),
+      require('get-style-property')
+    );
+  } else {
+    // browser global
+    window.Transitn = factory(
+      window.EventEmitter,
+      window.getStyleProperty
+    );
+  }
+
+})( this, function( EventEmitter, getStyleProperty ) {
+
+'use strict';
 
 // -------------------------- helpers -------------------------- //
 
@@ -39,8 +65,6 @@ function camelCase( str ) {
     return $1.toUpperCase().replace( '-' , '' );
   });
 }
-
-function transitionDefinition( EventEmitter, getStyleProperty ) {
 
 // -------------------------- CSS3 support -------------------------- //
 
@@ -282,21 +306,4 @@ Transitn.prototype.disable = function() {
 
 return Transitn;
 
-}
-
-if ( typeof define === 'function' && define.amd ) {
-  // AMD
-  define( [
-      'eventEmitter/EventEmitter',
-      'get-style-property/get-style-property'
-    ],
-    transitionDefinition );
-} else {
-  // browser global
-  window.Transitn = transitionDefinition(
-    window.EventEmitter,
-    window.getStyleProperty
-  );
-}
-
-})( window );
+});

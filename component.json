@@ -1,0 +1,15 @@
+{
+  "name": "transitn",
+  "repo": "desandro/transitn",
+  "description": "JS utility class for CSS transitions",
+  "version": "0.1.1",
+  "scripts": [
+    "transitn.js"
+  ],
+  "main": "transitn.js",
+  "dependencies": {
+    "Wolfy87/EventEmitter": "*",
+    "desandro/get-style-property": "*"
+  },
+  "license": "MIT"
+}

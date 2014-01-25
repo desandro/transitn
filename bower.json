@@ -1,11 +1,15 @@
 {
   "name": "transitn",
   "main": "transitn.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [
     "David DeSandro"
   ],
-  "description": "utility JS class for CSS transitions",
+  "description": "JS utility class for CSS transitions",
+  "dependencies": {
+    "eventEmitter": "#>=3 <5",
+    "get-style-property": "desandro/get-style-property#>=1 <2"
+  },
   "keywords": [
     "transition",
     "transitions"
@@ -17,9 +21,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "eventEmitter": "#>=3 <5",
-    "get-style-property": "desandro/get-style-property#>=1 <2"
-  }
+  ]
 }

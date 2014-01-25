@@ -32,17 +32,17 @@ window.onload = function() {
     var transition = new Transitn({
       element: box,
       duration: '0.8s',
-      isCleaning: true,
+      // isCleaning: true,
       to: {
         transform: 'translate(' + x + 'px,' + y + 'px)'
       }
     })
 
-    transition.on( 'transitionend', function( trans, event, propertyName ) {
+    transition.on( 'transitionend', function( trans, propertyName, event ) {
       console.log( propertyName );
     });
 
-    transition.transition();  
+    transition.start();
   }
 };
 </script>
