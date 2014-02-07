@@ -111,6 +111,8 @@ var styleProperty = ( function() {
 
 
 function Transitn( properties ) {
+  this.transitioningProperties = {};
+  this.clean = {};
   this.set( properties );
 }
 
@@ -188,9 +190,6 @@ Transitn.prototype._transition = function() {
     return;
   }
 
-  this.transitioningProperties = {};
-  this.clean = {};
-
   for ( var prop in this.to ) {
     // keep track of transitioning properties
     this.transitioningProperties[ prop ] = true;
@@ -220,22 +219,15 @@ Transitn.prototype.start = Transitn.prototype[ transitionProperty ? '_transition
 
 Transitn.prototype.enable = function() {
   // only enable if not already transitioning
-  // bug in IE10 were re-setting transition style will prevent
+  // bug in IE10: re-setting transition style will prevent
   // transitionend event from triggering
   if ( this.isTransitioning ) {
     return;
   }
 
-  // make transition: foo, bar, baz from style object
-  var transitionProps = [];
-  for ( var prop in this.to ) {
-    // dash-ify camelCased properties like WebkitTransition
-    prop = styleProperty.getVendor( prop );
-    transitionProps.push( dashCase( prop ) );
-  }
   // enable transition styles
   var transitionStyle = {
-    transitionProperty: transitionProps.join(','),
+    transitionProperty: this.getTransitionPropertyValue(),
     // TODO allow easy way to set default transitionDuration
     transitionDuration: this.duration || '0.4s'
   };
@@ -250,6 +242,17 @@ Transitn.prototype.enable = function() {
   this.element.addEventListener( transitionEndEvent, this, false );
 
   this.css( transitionStyle );
+};
+
+// make transition: foo, bar, baz from style object
+Transitn.prototype.getTransitionPropertyValue = function() {
+  var transitionProps = [];
+  for ( var prop in this.transitioningProperties ) {
+    // dash-ify camelCased properties like WebkitTransition
+    prop = styleProperty.getVendor( prop );
+    transitionProps.push( dashCase( prop ) );
+  }
+  return transitionProps.join(',');
 };
 
 
