@@ -111,13 +111,19 @@ var styleProperty = ( function() {
 
 
 function Transitn( properties ) {
-  this.transitioningProperties = {};
-  this.clean = {};
+  this.reset();
   this.set( properties );
 }
 
 Transitn.prototype = new EventEmitter();
 Transitn.prototype.constructor = Transitn;
+
+// reset interal properties
+Transitn.prototype.reset = function() {
+  this.isTransitioning = false;
+  this.transitioningProperties = {};
+  this.clean = {};
+};
 
 // from
 // to
@@ -283,18 +289,18 @@ Transitn.prototype.ontransitionend = function( event ) {
   // get property name of transitioned property, convert to prefix-free
   var propertyName = styleProperty.getStandard( camelCase( event.propertyName ) ); 
 
+  // clean style
+  if ( propertyName in this.clean ) {
+    // clean up style
+    this.element.style[ event.propertyName ] = '';
+    delete this.clean[ propertyName ];
+  }
   // remove property that has completed transitioning
   delete this.transitioningProperties[ propertyName ];
   // check if any properties are still transitioning
   if ( isEmptyObj( this.transitioningProperties ) ) {
     // all properties have completed transitioning
     this.disable();
-  }
-  // clean style
-  if ( propertyName in this.clean ) {
-    // clean up style
-    this.element.style[ event.propertyName ] = '';
-    delete this.clean[ propertyName ];
   }
 
   this.emitEvent( 'transitionend', [ this, propertyName, event ] );
@@ -303,7 +309,7 @@ Transitn.prototype.ontransitionend = function( event ) {
 Transitn.prototype.disable = function() {
   this.removeTransitionStyles();
   this.element.removeEventListener( transitionEndEvent, this, false );
-  this.isTransitioning = false;
+  this.reset();
 };
 
 
