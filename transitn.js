@@ -224,12 +224,11 @@ Transitn.prototype._transition = function() {
 Transitn.prototype.start = Transitn.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
 
 Transitn.prototype.enable = function() {
-  // only enable if not already transitioning
   // bug in IE10: re-setting transition style will prevent
   // transitionend event from triggering
-  if ( this.isTransitioning ) {
-    return;
-  }
+  // if ( this.isTransitioning ) {
+  //   return;
+  // }
 
   // enable transition styles
   var transitionStyle = {
@@ -285,7 +284,6 @@ Transitn.prototype.ontransitionend = function( event ) {
   if ( event.target !== this.element ) {
     return;
   }
-
   // get property name of transitioned property, convert to prefix-free
   var propertyName = styleProperty.getStandard( camelCase( event.propertyName ) ); 
 
@@ -298,12 +296,17 @@ Transitn.prototype.ontransitionend = function( event ) {
   // remove property that has completed transitioning
   delete this.transitioningProperties[ propertyName ];
   // check if any properties are still transitioning
-  if ( isEmptyObj( this.transitioningProperties ) ) {
-    // all properties have completed transitioning
+  var isComplete = isEmptyObj( this.transitioningProperties );
+  if ( isComplete ) {
     this.disable();
   }
-
+  // emit events
   this.emitEvent( 'transitionend', [ this, propertyName, event ] );
+  // emit event when all properties have ended transitioning
+  if ( isComplete ) {
+    // TODO have better name
+    this.emitEvent( 'complete', [ this ] );
+  }
 };
 
 Transitn.prototype.disable = function() {
