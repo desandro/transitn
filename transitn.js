@@ -1,5 +1,5 @@
 /*!
- * Transitn 0.1.1
+ * Transitn 0.2.0
  * utility class for CSS transitions
  * MIT license
  */
@@ -224,12 +224,6 @@ Transitn.prototype._transition = function() {
 Transitn.prototype.start = Transitn.prototype[ transitionProperty ? '_transition' : '_nonTransition' ];
 
 Transitn.prototype.enable = function() {
-  // bug in IE10: re-setting transition style will prevent
-  // transitionend event from triggering
-  // if ( this.isTransitioning ) {
-  //   return;
-  // }
-
   // enable transition styles
   var transitionStyle = {
     transitionProperty: this.getTransitionPropertyValue(),

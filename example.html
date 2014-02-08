@@ -10,12 +10,19 @@
     height: 100px;
     background: #09F;
   }
+
+  button {
+    font-size: 18px;
+  }
   </style>
 
 </head>
 <body>
 
   <h1>transition</h1>
+  <p>
+    <button id="delayed">Delayed</button>
+  </p>
   <div id="box"></div>
 
 <script src="bower_components/eventEmitter/EventEmitter.js"></script>
@@ -23,18 +30,21 @@
 <script src="transitn.js"></script>
 
 <script>
+function getRandomTranslate() {
+  var x = Math.floor( Math.random() * 400 );
+  var y = Math.floor( Math.random() * 100 );
+  return 'translate(' + x + 'px,' + y + 'px)';
+}
 
 window.onload = function() {
   var box = document.querySelector('#box');
   box.onclick = function() {
-    var x = Math.floor( Math.random() * 400 );
-    var y = Math.floor( Math.random() * 100 );
     var transition = new Transitn({
       element: box,
       duration: '0.8s',
       // isCleaning: true,
       to: {
-        transform: 'translate(' + x + 'px,' + y + 'px)'
+        transform: getRandomTranslate()
       }
     })
 
@@ -44,6 +54,34 @@ window.onload = function() {
 
     transition.start();
   }
+
+  // ----- delayed ----- //
+
+  var delayedTransition = new Transitn({
+    element: box,
+    duration: '0.8s'
+  });
+
+  delayedTransition.on( 'transitionend', function( trans, propertyName, event ) {
+    console.log( 'delayed transitionend ' + propertyName );
+  });
+
+  delayedTransition.on( 'complete', function() {
+    console.log('delayed complete');
+  });
+
+  document.querySelector('#delayed').onclick = function() {
+    delayedTransition.to = {
+      transform: getRandomTranslate()
+    };
+    // delayedTransition.isCleaning = true;
+    delayedTransition.start();
+    setTimeout( function() {
+      delayedTransition.to = { opacity: ( Math.random() * 0.75 + 0.25 ) };
+      delayedTransition.start();
+    }, 350 );
+  }
+
 };
 </script>
 
