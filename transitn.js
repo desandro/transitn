@@ -123,6 +123,8 @@ Transitn.prototype.reset = function() {
   this.isTransitioning = false;
   this.transitioningProperties = {};
   this.clean = {};
+  delete this.to;
+  delete this.from;
 };
 
 // from
@@ -132,7 +134,15 @@ Transitn.prototype.reset = function() {
 // timingFunction
 // isCleaning
 Transitn.prototype.set = function( props ) {
-  extend( this, props );
+  for ( var prop in props ) {
+    var value = props[ prop ];
+    if ( prop === 'from' || prop === 'to' ) {
+      // copy to new object for from and to
+      value = extend( {}, value );
+    }
+    // set property
+    this[ prop ] = value;
+  }
 };
 
 // ----- css ----- //
@@ -179,6 +189,8 @@ Transitn.prototype._nonTransition = function() {
   for ( var prop in this.to ) {
     this.emitEvent( 'transitionend', [ this, prop, event ] );
   }
+
+  this.reset();
 };
 
 /**
@@ -212,6 +224,8 @@ Transitn.prototype._transition = function() {
     var h = this.element.offsetHeight;
     // hack for JSHint to hush about unused var
     h = null;
+    // reset from
+    delete this.from;
   }
   // enable transition
   this.enable();
@@ -289,6 +303,7 @@ Transitn.prototype.ontransitionend = function( event ) {
   }
   // remove property that has completed transitioning
   delete this.transitioningProperties[ propertyName ];
+  delete this.to[ propertyName ];
   // check if any properties are still transitioning
   var isComplete = isEmptyObj( this.transitioningProperties );
   if ( isComplete ) {
